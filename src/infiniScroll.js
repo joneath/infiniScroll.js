@@ -8,7 +8,10 @@
 
     var self = { },
         fetchOn,
-        page;
+        page,
+        pageSize;
+
+    pageSize = collection.length;
 
     self.collection = collection;
     self.options = _.defaults(options, {
@@ -16,7 +19,7 @@
       error: function(){ },
       param: "until",
       untilAttr: "id",
-      pageSize: 25,
+      pageSize: pageSize,
       scrollOffset: 100,
       add: true
     });

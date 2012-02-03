@@ -11,6 +11,7 @@ describe("InfiniScroll", function() {
     });
 
     collection = new Collection([{id: 1}]);
+    collection.length = 25;
 
     view = new Backbone.View({collection: collection});
 
