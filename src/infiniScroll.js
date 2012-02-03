@@ -31,6 +31,10 @@
       $(window).on("scroll", self.watchScroll);
     };
 
+    self.destroy = function() {
+      $(window).off("scroll", self.watchScroll);
+    };
+
     self.enableFetch = function() {
       fetchOn = true;
     };
