@@ -17,6 +17,7 @@
     self.options = _.defaults(options, {
       success: function(){ },
       error: function(){ },
+      target: $(window),
       param: "until",
       untilAttr: "id",
       pageSize: pageSize,
@@ -28,11 +29,11 @@
       fetchOn = true;
       page = 1;
 
-      $(window).on("scroll", self.watchScroll);
+      $(self.options.target).on("scroll", self.watchScroll);
     };
 
     self.destroy = function() {
-      $(window).off("scroll", self.watchScroll);
+      $(self.options.target).off("scroll", self.watchScroll);
     };
 
     self.enableFetch = function() {
@@ -63,7 +64,7 @@
 
     self.watchScroll = function(e) {
       var queryParams,
-          scrollY = $(window).scrollTop() + $(window).height(),
+          scrollY = $(self.options.target).scrollTop() + $(self.options.target).height(),
           docHeight = $(document).height();
 
       if (scrollY >= docHeight - self.options.scrollOffset && fetchOn){
