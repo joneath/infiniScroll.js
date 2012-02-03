@@ -52,7 +52,7 @@ describe("InfiniScroll", function() {
       describe("when the returned data is the same length as the page size", function() {
         it("should call enableFetch", function() {
           spyOn(infini, "enableFetch");
-          collection.length = 25;
+          collection.length = 50;
 
           infini.fetchSuccess(collection, null);
           expect(infini.enableFetch).toHaveBeenCalled();
@@ -62,7 +62,7 @@ describe("InfiniScroll", function() {
       describe("when the returned data is less than the length of the page size", function() {
         it("should call disableFetch", function() {
           spyOn(infini, "disableFetch");
-          collection.length = 24;
+          collection.length = 25;
 
           infini.fetchSuccess(collection, null);
           expect(infini.disableFetch).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe("InfiniScroll", function() {
         queryParams = { };
         queryParams[infini.options.param] = collection.last()[infini.options.untilAttr];
 
-        collection.length = 25;
+        collection.length = 50;
       });
 
       it("should call collection fetch with the query param, until offset, success, and error callbacks", function() {

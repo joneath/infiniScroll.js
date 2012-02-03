@@ -11,7 +11,7 @@
         page,
         pageSize;
 
-    pageSize = collection.length;
+    pageSize = collection.length || 25;
 
     self.collection = collection;
     self.options = _.defaults(options, {
@@ -45,14 +45,13 @@
     };
 
     self.fetchSuccess = function(collection, response) {
-      if (collection.length >= page * self.options.pageSize){
+      if (collection.length >= (page + 1) * self.options.pageSize){
         self.enableFetch();
         page += 1;
       }
       else{
         self.disableFetch();
       }
-
       self.options.success(collection, response);
     };
 
