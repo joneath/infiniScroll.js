@@ -15,7 +15,7 @@
       success: function(){ },
       error: function(){ },
       param: "until",
-      until_attr: "id",
+      untilAttr: "id",
       pageSize: 25,
       scrollOffset: 100,
       add: true
@@ -61,7 +61,7 @@
 
       if (scrollY >= docHeight - self.options.scrollOffset && fetchOn){
         queryParams = { };
-        queryParams[self.options.param] = self.collection.last()[self.options.until_attr];
+        queryParams[self.options.param] = self.collection.last()[self.options.untilAttr];
 
         self.disableFetch();
         self.collection.fetch({

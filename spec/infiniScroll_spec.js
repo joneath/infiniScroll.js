@@ -31,7 +31,7 @@ describe("InfiniScroll", function() {
       var infini = new Backbone.InfiniScroll(collection);
 
       expect(infini.options.param).toEqual("until");
-      expect(infini.options.until_attr).toEqual("id");
+      expect(infini.options.untilAttr).toEqual("id");
       expect(infini.options.pageSize).toEqual(25);
       expect(infini.options.scrollOffset).toEqual(100);
       expect(infini.options.add).toEqual(true);
@@ -103,7 +103,7 @@ describe("InfiniScroll", function() {
         infini.watchScroll(event);
 
         queryParams = { };
-        queryParams[infini.options.param] = collection.last()[infini.options.until_attr];
+        queryParams[infini.options.param] = collection.last()[infini.options.untilAttr];
 
         collection.length = 25;
       });
