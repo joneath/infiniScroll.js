@@ -1,4 +1,4 @@
-describe("infiniScroll", function() {
+describe("InfiniScroll", function() {
   var PAGE_SIZE = 25;
   var collection,
       view,
@@ -19,16 +19,16 @@ describe("infiniScroll", function() {
       error: function() { }
     };
 
-    infini = new Backbone.infiniScroll(collection, options);
+    infini = new Backbone.InfiniScroll(collection, options);
   });
 
-  it("should bind to Backbone.infiniScroll", function() {
-    expect(Backbone.infiniScroll).toBeDefined();
+  it("should bind to Backbone.InfiniScroll", function() {
+    expect(Backbone.InfiniScroll).toBeDefined();
   });
 
   describe("initialization", function() {
     it("should have default values when no options are passed", function() {
-      var infini = new Backbone.infiniScroll(collection);
+      var infini = new Backbone.InfiniScroll(collection);
 
       expect(infini.options.param).toEqual("until");
       expect(infini.options.until_attr).toEqual("id");
@@ -88,7 +88,7 @@ describe("infiniScroll", function() {
 
     beforeEach(function() {
       event = jQuery.Event("scroll");
-      infini = new Backbone.infiniScroll(collection);
+      infini = new Backbone.InfiniScroll(collection);
 
       spyOn(collection, "fetch");
     });

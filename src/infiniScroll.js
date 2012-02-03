@@ -3,7 +3,7 @@
 // Version 0.1
 
 (function() {
-  Backbone.infiniScroll = function(collection, options){
+  Backbone.InfiniScroll = function(collection, options){
     options = options || { };
 
     var self = { },
