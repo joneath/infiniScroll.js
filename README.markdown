@@ -1,7 +1,5 @@
 # infiniScroll.js
 
-## Description
-
 infiniScroll.js is a Backbone.js module to add infinite scrolling to your backbone views. Simply create an `InfiniScroll` object passing the desired collection and success callback.
 
 ## Usage
@@ -20,15 +18,10 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
     
 ### methods
 
-#### destory()
-Removes target scroll binding. Call this when you are removing your view.
+* `destory()` - Removes target scroll binding. Call this when you are removing your view.
+* `enableFetch()` - Enables infiniScroll
+* `disableFetch()` - Disables infiniScroll
 
-#### enableFetch()
-Enables infiniScroll
-
-#### disableFetch()
-Disables infiniScroll
-    
 ### Options
     options = {
       success: function(){ },
@@ -41,26 +34,11 @@ Disables infiniScroll
       add: true
     }
 
-#### success (no_op)
-Success callback function called when `collection.fetch` is successful
-
-#### error (no_op)
-Error callback function called when `collection.fetch` raises error
-
-#### target (window)
-Target element to watch scroll. Change this if you have an internal scrolling element to infinite scroll.
-
-#### param ("until")
-GET param used when `collection.fetch` is called
-
-#### until_attr ("id")
-The GET param attribute used when `collection.fetch` is called. Finds last record in collection and uses this param as key.
-
-#### pageSize (`collection.length`)
-Used internally to determine when fetching of pages is completed.
-
-#### scrollOffset (100px)
-Pixel count from bottom of page to offset the scroll for when to trigger `collection.fetch`
-
-#### add (true)
-Passed to collection fetch to either add new records to the collection of perform a normal reset
+* `success` - Success callback function called when `collection.fetch` is successful
+* `error` - Error callback function called when `collection.fetch` raises error
+* `target` - Target element to watch scroll. Change this if you have an internal scrolling element to infinite scroll.
+* `param` - GET param used when `collection.fetch` is called
+* `until_attr` - The GET param attribute used when `collection.fetch` is called. Finds last record in collection and uses this param as key.
+* `pageSize` - Used internally to determine when fetching of pages is completed.
+* `scrollOffset` - Pixel count from bottom of page to offset the scroll for when to trigger `collection.fetch`
+* `add` - Passed to collection fetch to either add new records to the collection of perform a normal reset
