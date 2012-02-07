@@ -9,7 +9,8 @@
     var self = { },
         fetchOn,
         page,
-        pageSize;
+        pageSize,
+        prevScrollY = 0;
 
     pageSize = collection.length || 25;
 
@@ -66,16 +67,21 @@
           scrollY = $(self.options.target).scrollTop() + $(self.options.target).height(),
           docHeight = $(document).height();
 
-      if (scrollY >= docHeight - self.options.scrollOffset && fetchOn){
+      if (scrollY >= docHeight - self.options.scrollOffset && fetchOn && prevScrollY <= scrollY){
+        var lastModel = self.collection.last();
+        if (!lastModel) { return; }
+
         queryParams = { };
-        queryParams[self.options.param] = self.collection.last()[self.options.untilAttr];
+        queryParams[self.options.param] = lastModel.get(self.options.untilAttr);
 
         self.disableFetch();
         self.collection.fetch({
           success: self.fetchSuccess,
-          error: self.fetchError
-        }, queryParams);
+          error: self.fetchError,
+          data: queryParams
+        });
       }
+      prevScrollY = scrollY;
     };
 
     initialize();

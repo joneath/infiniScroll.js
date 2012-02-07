@@ -95,26 +95,32 @@ describe("InfiniScroll", function() {
     });
 
     describe("when the window is scrolled above the threshold", function() {
-      var queryParams;
+      var queryParams,
+          scrollTop;
 
       beforeEach(function() {
-        spyOn($.fn, "scrollTop").andReturn(600);
+        scrollTop = 600;
+
+        spyOn($.fn, "scrollTop").andCallFake(function(){ return scrollTop; });
         spyOn($.fn, "height").andReturn(600);
 
         infini.watchScroll(event);
 
         queryParams = { };
-        queryParams[infini.options.param] = collection.last()[infini.options.untilAttr];
+        queryParams[infini.options.param] = collection.last().get(infini.options.untilAttr);
 
         collection.length = 50;
       });
 
       it("should call collection fetch with the query param, until offset, success, and error callbacks", function() {
-        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError}, queryParams);
+        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, data: queryParams});
       });
 
       it("should disable scroll watch until the fetch has returned", function() {
-        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError}, queryParams);
+        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, data: queryParams});
+
+        infini.watchScroll(event);
+        expect(collection.fetch.callCount).toEqual(1);
 
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(1);
@@ -124,11 +130,24 @@ describe("InfiniScroll", function() {
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(2);
       });
+
+      describe("when the window is scrolled up", function() {
+        it("should not call collection fetch", function() {
+          infini.watchScroll(event);
+          expect(collection.fetch).toHaveBeenCalled();
+
+          scrollTop = 599;
+          infini.enableFetch();
+
+          infini.watchScroll(event);
+          expect(collection.fetch.callCount).toEqual(1);
+        });
+      });
     });
 
     describe("when the window is scrolled bellow the threshold", function() {
       it("should not call collection fetch", function() {
-        spyOn($.fn, "scrollTop").andReturn(-101); // Crazy number for subbing
+        spyOn($.fn, "scrollTop").andReturn(-101); // Crazy number for stubbing
         spyOn($.fn, "height").andReturn(200);
 
         infini.watchScroll(event);
