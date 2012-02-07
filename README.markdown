@@ -10,12 +10,12 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
     myView = Backbone.View.extend({
       initialize: function(){
         _.bindAll(this, "render");
-        
+
         this.render();
         this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendRender});
       }
     )};
-    
+
 ### methods
 
 * `destory()` - Removes target scroll binding. Call this when you are removing your view.
@@ -38,7 +38,7 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 * `error` - Error callback function called when `collection.fetch` raises error
 * `target` - Target element to watch scroll. Change this if you have an internal scrolling element to infinite scroll.
 * `param` - GET param used when `collection.fetch` is called
-* `until_attr` - The GET param attribute used when `collection.fetch` is called. Finds last record in collection and uses this param as key.
+* `until_attr` - The GET param attribute used when `collection.fetch` is called. Finds last record in collection and uses this param as key. Can be a function name on the model, which you can used to act as a calculated param.
 * `pageSize` - Used internally to determine when fetching of pages is completed.
 * `scrollOffset` - Pixel count from bottom of page to offset the scroll for when to trigger `collection.fetch`
 * `add` - Passed to collection fetch to either add new records to the collection of perform a normal reset
