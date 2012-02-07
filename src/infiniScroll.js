@@ -72,7 +72,11 @@
         if (!lastModel) { return; }
 
         queryParams = { };
-        queryParams[self.options.param] = lastModel.get(self.options.untilAttr);
+        if (lastModel[self.options.untilAttr] &&  typeof(lastModel[self.options.untilAttr]) === "function") {
+          queryParams[self.options.param] = lastModel[self.options.untilAttr]();
+        } else {
+          queryParams[self.options.param] = lastModel.get(self.options.untilAttr);
+        }
 
         self.disableFetch();
         self.collection.fetch({

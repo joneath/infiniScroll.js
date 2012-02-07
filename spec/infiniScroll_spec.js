@@ -1,6 +1,7 @@
 describe("InfiniScroll", function() {
   var PAGE_SIZE = 25;
   var collection,
+      model,
       view,
       options,
       infini;
@@ -10,7 +11,13 @@ describe("InfiniScroll", function() {
       url: "/example"
     });
 
-    collection = new Collection([{id: 1}]);
+    var Model = Backbone.Model.extend({
+      calculatedParam: function() { }
+    });
+
+    model = new Model({id: 1});
+
+    collection = new Collection([model]);
     collection.length = 25;
 
     view = new Backbone.View({collection: collection});
@@ -129,6 +136,17 @@ describe("InfiniScroll", function() {
 
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(2);
+      });
+
+      describe("when untilAttr is a function", function() {
+        it("should call the untilAttr function", function() {
+          spyOn(model, "calculatedParam");
+          options.untilAttr = "calculatedParam";
+          infini = new Backbone.InfiniScroll(collection, options);
+          infini.watchScroll(event);
+
+          expect(model.calculatedParam).toHaveBeenCalled();
+        });
       });
 
       describe("when the window is scrolled up", function() {
