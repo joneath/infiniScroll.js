@@ -113,11 +113,11 @@ describe("InfiniScroll", function() {
       });
 
       it("should call collection fetch with the query param, until offset, success, and error callbacks", function() {
-        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, data: queryParams});
+        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, add: true, data: queryParams});
       });
 
       it("should disable scroll watch until the fetch has returned", function() {
-        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, data: queryParams});
+        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, add: true, data: queryParams});
 
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(1);

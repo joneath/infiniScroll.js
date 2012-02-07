@@ -78,6 +78,7 @@
         self.collection.fetch({
           success: self.fetchSuccess,
           error: self.fetchError,
+          add: self.options.add,
           data: queryParams
         });
       }
