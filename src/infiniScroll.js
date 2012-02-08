@@ -3,7 +3,7 @@
 // Version 0.1
 
 (function() {
-  Backbone.InfiniScroll = function(collection, options){
+  Backbone.InfiniScroll = function(collection, options) {
     options = options || { };
 
     var self = { },
@@ -18,6 +18,7 @@
     self.options = _.defaults(options, {
       success: function(){ },
       error: function(){ },
+      onFetch: function(){ },
       target: $(window),
       param: "until",
       untilAttr: "id",
@@ -45,12 +46,15 @@
       fetchOn = false;
     };
 
+    self.onFetch = function() {
+      self.options.onFetch();
+    };
+
     self.fetchSuccess = function(collection, response) {
-      if (collection.length >= (page + 1) * self.options.pageSize){
+      if (collection.length >= (page + 1) * self.options.pageSize) {
         self.enableFetch();
         page += 1;
-      }
-      else{
+      } else {
         self.disableFetch();
       }
       self.options.success(collection, response);
@@ -67,7 +71,7 @@
           scrollY = $(self.options.target).scrollTop() + $(self.options.target).height(),
           docHeight = $(document).height();
 
-      if (scrollY >= docHeight - self.options.scrollOffset && fetchOn && prevScrollY <= scrollY){
+      if (scrollY >= docHeight - self.options.scrollOffset && fetchOn && prevScrollY <= scrollY) {
         var lastModel = self.collection.last();
         if (!lastModel) { return; }
 
@@ -78,6 +82,7 @@
           queryParams[self.options.param] = lastModel.get(self.options.untilAttr);
         }
 
+        self.onFetch();
         self.disableFetch();
         self.collection.fetch({
           success: self.fetchSuccess,
@@ -93,4 +98,4 @@
 
     return self;
   };
-}).call(this);
+})( );

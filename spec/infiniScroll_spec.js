@@ -24,10 +24,15 @@ describe("InfiniScroll", function() {
 
     options = {
       success: function() { },
-      error: function() { }
+      error: function() { },
+      onFetch: function() { }
     };
 
     infini = new Backbone.InfiniScroll(collection, options);
+  });
+
+  afterEach(function() {
+    infini.destroy();
   });
 
   it("should bind to Backbone.InfiniScroll", function() {
@@ -91,13 +96,10 @@ describe("InfiniScroll", function() {
   });
 
   describe("#watchScroll", function() {
-    var event,
-        infini;
+    var event;
 
     beforeEach(function() {
       event = jQuery.Event("scroll");
-      infini = new Backbone.InfiniScroll(collection);
-
       spyOn(collection, "fetch");
     });
 
@@ -138,11 +140,17 @@ describe("InfiniScroll", function() {
         expect(collection.fetch.callCount).toEqual(2);
       });
 
+      describe("when a onFetch callback is provided", function() {
+        it("should call the callback", function() {
+
+        });
+      });
+
       describe("when untilAttr is a function", function() {
         it("should call the untilAttr function", function() {
           spyOn(model, "calculatedParam");
           options.untilAttr = "calculatedParam";
-          infini = new Backbone.InfiniScroll(collection, options);
+          var infini = new Backbone.InfiniScroll(collection, options);
           infini.watchScroll(event);
 
           expect(model.calculatedParam).toHaveBeenCalled();
