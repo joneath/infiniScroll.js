@@ -52,33 +52,53 @@ describe("InfiniScroll", function() {
   });
 
   describe("#fetchSuccess", function() {
+    beforeEach(function() {
+      collection.length = PAGE_SIZE;
+    });
+
     describe("with an included external success callback", function() {
       it("should call the provided success callback", function() {
         spyOn(infini.options, "success");
         spyOn(infini.options, "error");
 
-        infini.fetchSuccess(collection, null);
-        expect(infini.options.success).toHaveBeenCalledWith(collection, null);
+        infini.fetchSuccess(collection, []);
+        expect(infini.options.success).toHaveBeenCalledWith(collection, []);
+      });
+    });
+
+    describe("when in strict mode", function() {
+      var infini;
+
+      beforeEach(function() {
+        infini = new Backbone.InfiniScroll(collection, {strict: true});
+        spyOn(infini, "enableFetch");
+        spyOn(infini, "disableFetch");
       });
 
-      describe("when the returned data is the same length as the page size", function() {
-        it("should call enableFetch", function() {
-          spyOn(infini, "enableFetch");
-          collection.length = 50;
+      it("should disable fetch when the response page size is less than the requested page size", function() {
+        collection.length = PAGE_SIZE * 1.5;
+        infini.fetchSuccess(collection, [{id: 1}]);
+        expect(infini.disableFetch).toHaveBeenCalled();
+      });
+    });
 
-          infini.fetchSuccess(collection, null);
-          expect(infini.enableFetch).toHaveBeenCalled();
-        });
+    describe("when not in strict mode", function() {
+      var infini;
+
+      beforeEach(function() {
+        infini = new Backbone.InfiniScroll(collection, {strict: false});
+        spyOn(infini, "enableFetch");
+        spyOn(infini, "disableFetch");
       });
 
-      describe("when the returned data is less than the length of the page size", function() {
-        it("should call disableFetch", function() {
-          spyOn(infini, "disableFetch");
-          collection.length = 25;
+      it("should disable fetch when the response page size is 0", function() {
+        infini.fetchSuccess(collection, []);
+        expect(infini.disableFetch).toHaveBeenCalled();
+      });
 
-          infini.fetchSuccess(collection, null);
-          expect(infini.disableFetch).toHaveBeenCalled();
-        });
+      it("should not disable fetch when the response size is greater than 0", function() {
+        infini.fetchSuccess(collection, [{id: 1}]);
+        expect(infini.enableFetch).toHaveBeenCalled();
       });
     });
   });
@@ -134,16 +154,10 @@ describe("InfiniScroll", function() {
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(1);
 
-        infini.fetchSuccess(collection, null);
+        infini.fetchSuccess(collection, [{id: 1}]);
 
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(2);
-      });
-
-      describe("when a onFetch callback is provided", function() {
-        it("should call the callback", function() {
-
-        });
       });
 
       describe("when untilAttr is a function", function() {

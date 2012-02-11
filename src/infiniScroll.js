@@ -24,7 +24,8 @@
       untilAttr: "id",
       pageSize: pageSize,
       scrollOffset: 100,
-      add: true
+      add: true,
+      strict: false
     });
 
     var initialize = function() {
@@ -51,7 +52,7 @@
     };
 
     self.fetchSuccess = function(collection, response) {
-      if (collection.length >= (page + 1) * self.options.pageSize) {
+      if ((self.options.strict && collection.length >= (page + 1) * self.options.pageSize) || (!self.options.strict && response.length > 0)) {
         self.enableFetch();
         page += 1;
       } else {
