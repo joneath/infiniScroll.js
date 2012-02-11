@@ -1,5 +1,5 @@
 // Created by Jonathan Eatherly, (https://github.com/joneath)
-// MIT licence
+// MIT license
 // Version 0.1
 
 (function() {
