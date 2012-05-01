@@ -48,6 +48,7 @@ describe("InfiniScroll", function() {
       expect(infini.options.pageSize).toEqual(25);
       expect(infini.options.scrollOffset).toEqual(100);
       expect(infini.options.add).toEqual(true);
+      expect(infini.options.includePage).toEqual(false);
     });
   });
 
@@ -160,6 +161,17 @@ describe("InfiniScroll", function() {
         expect(collection.fetch.callCount).toEqual(2);
       });
 
+      describe("when given the includePage option", function() {
+        it("should include the page count in the query params", function() {
+          infini = new Backbone.InfiniScroll(collection, {includePage: true});
+          queryParams[infini.options.param] = collection.last().get(infini.options.untilAttr);
+          queryParams["page"] = 2;
+
+          infini.watchScroll(event);
+          expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, add: true, data: queryParams});
+        });
+      });
+
       describe("when untilAttr is a function", function() {
         it("should call the untilAttr function", function() {
           spyOn(model, "calculatedParam");
@@ -168,6 +180,7 @@ describe("InfiniScroll", function() {
           infini.watchScroll(event);
 
           expect(model.calculatedParam).toHaveBeenCalled();
+          infini.watchScroll(event);
         });
       });
 
