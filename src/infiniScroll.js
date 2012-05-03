@@ -25,7 +25,8 @@
       pageSize: pageSize,
       scrollOffset: 100,
       add: true,
-      strict: false
+      strict: false,
+      includePage: false
     });
 
     var initialize = function() {
@@ -80,24 +81,29 @@
         var lastModel = self.collection.last();
         if (!lastModel) { return; }
 
-        queryParams = { };
-        if (lastModel[self.options.untilAttr] &&  typeof(lastModel[self.options.untilAttr]) === "function") {
-          queryParams[self.options.param] = lastModel[self.options.untilAttr]();
-        } else {
-          queryParams[self.options.param] = lastModel.get(self.options.untilAttr);
-        }
-
         self.onFetch();
         self.disableFetch();
         self.collection.fetch({
           success: self.fetchSuccess,
           error: self.fetchError,
           add: self.options.add,
-          data: queryParams
+          data: buildQueryParams(lastModel)
         });
       }
       prevScrollY = scrollY;
     };
+
+    function buildQueryParams(model) {
+      var params = { };
+
+      params[self.options.param] = typeof(model[self.options.untilAttr]) === "function" ? model[self.options.untilAttr]() : model.get(self.options.untilAttr);
+
+      if (self.options.includePage) {
+        params["page"] = page + 1;
+      }
+
+      return params;
+    }
 
     initialize();
 
