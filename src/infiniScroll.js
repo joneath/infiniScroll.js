@@ -70,7 +70,11 @@
     self.watchScroll = function(e) {
       var queryParams,
           scrollY = $(self.options.target).scrollTop() + $(self.options.target).height(),
-          docHeight = $(document).height();
+          docHeight = $(self.options.target).get(0).scrollHeight;
+
+      if (!docHeight) {
+        docHeight = $(document).height();
+      }
 
       if (scrollY >= docHeight - self.options.scrollOffset && fetchOn && prevScrollY <= scrollY) {
         var lastModel = self.collection.last();
