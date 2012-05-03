@@ -7,6 +7,7 @@
     options = options || { };
 
     var self = { },
+        $target,
         fetchOn,
         page,
         pageSize,
@@ -30,14 +31,15 @@
     });
 
     var initialize = function() {
+      $target = $(self.options.target);
       fetchOn = true;
       page = 1;
 
-      $(self.options.target).on("scroll", self.watchScroll);
+      $target.on("scroll", self.watchScroll);
     };
 
     self.destroy = function() {
-      $(self.options.target).off("scroll", self.watchScroll);
+      $target.off("scroll", self.watchScroll);
     };
 
     self.enableFetch = function() {
@@ -70,8 +72,8 @@
 
     self.watchScroll = function(e) {
       var queryParams,
-          scrollY = $(self.options.target).scrollTop() + $(self.options.target).height(),
-          docHeight = $(self.options.target).get(0).scrollHeight;
+          scrollY = $target.scrollTop() + $target.height(),
+          docHeight = $target.get(0).scrollHeight;
 
       if (!docHeight) {
         docHeight = $(document).height();
