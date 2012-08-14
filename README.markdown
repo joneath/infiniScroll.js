@@ -28,6 +28,7 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
       error: function(){ },
       target: $(window),
       param: "until",
+      extraParams: {},
       pageSizeParam: "page_size",
       untilAttr: "id",
       pageSize: collection.length,
@@ -41,6 +42,7 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 * `error` - Error callback function called when `collection.fetch` raises error
 * `target` - Target element to watch scroll. Change this if you have an internal scrolling element to infinite scroll.
 * `param` - GET param used when `collection.fetch` is called
+* `extraParams` - extra GET params used when `collection.fetch` is called
 * `untilAttr` - The GET param attribute used when `collection.fetch` is called. Finds last record in collection and uses this param as key. Can be a function name on the model, which you can used as a computed property.
 * `pageSize` - Used internally to determine when fetching of pages is completed.
 * `pageSizeParam` - GET param used to send page size when `collection.fetch` is called.
