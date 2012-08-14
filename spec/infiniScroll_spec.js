@@ -44,6 +44,7 @@ describe("InfiniScroll", function() {
       var infini = new Backbone.InfiniScroll(collection);
 
       expect(infini.options.param).toEqual("until");
+      expect(infini.options.extraParams).toEqual({});
       expect(infini.options.untilAttr).toEqual("id");
       expect(infini.options.pageSize).toEqual(25);
       expect(infini.options.scrollOffset).toEqual(100);
@@ -167,6 +168,17 @@ describe("InfiniScroll", function() {
           infini = new Backbone.InfiniScroll(collection, {includePage: true});
           queryParams[infini.options.param] = collection.last().get(infini.options.untilAttr);
           queryParams["page"] = 2;
+          queryParams[infini.options.pageSizeParam] = infini.options.pageSize;
+
+          infini.watchScroll(event);
+          expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, add: true, data: queryParams});
+        });
+      });
+
+      describe("when passing extra params", function() {
+        it("should pass extra params to fetch", function() {
+          infini = new Backbone.InfiniScroll(collection, {extraParams: {name: 'Jesse Pinkman'}});
+          queryParams['name'] = 'Jesse Pinkman';
           queryParams[infini.options.pageSizeParam] = infini.options.pageSize;
 
           infini.watchScroll(event);
