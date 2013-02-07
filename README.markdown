@@ -18,7 +18,7 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 
 ### methods
 
-* `destory()` - Removes target scroll binding. Call this when you're removing the view.
+* `destroy()` - Removes target scroll binding. Call this when you're removing the view.
 * `enableFetch()` - Enables infiniScroll
 * `disableFetch()` - Disables infiniScroll
 
