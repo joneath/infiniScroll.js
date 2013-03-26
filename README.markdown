@@ -13,6 +13,10 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 
         this.render();
         this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendRender});
+      },
+      remove: function() {
+        this.infiniScroll.destroy();
+        return Backbone.View.prototype.remove.call(this);
       }
     )};
 
@@ -33,7 +37,7 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
       untilAttr: "id",
       pageSize: collection.length,
       scrollOffset: 100,
-      add: true,
+      remove: false,
       strict: false,
       includePage: false
     }
@@ -47,6 +51,6 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 * `pageSize` - Used internally to determine when fetching of pages is completed.
 * `pageSizeParam` - GET param used to send page size when `collection.fetch` is called.
 * `scrollOffset` - Pixel count from bottom of page to offset the scroll for when to trigger `collection.fetch`
-* `add` - Passed to collection fetch to either add new records to the collection of perform a normal reset
+* `remove` - Passed to collection fetch to add new records to the collection without removing existing ones
 * `strict` - Used to determine when to stop fetching. Setting strict on will fetch until the response size is less than the page size (This can save one extra request being made to the server, but requires the response size to be consistent). Setting strict off will fetch until the response length is equal to 0 (better for varying page size responses).
 * `includePage` - Boolean to include the next page in the query params eg. "&page=2".
