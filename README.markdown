@@ -13,6 +13,10 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 
         this.render();
         this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendRender});
+      },
+      remove: function() {
+        this.infiniScroll.destroy();
+        return Backbone.View.prototype.remove.call(this);
       }
     )};
 
