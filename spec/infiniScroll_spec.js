@@ -48,7 +48,6 @@ describe("InfiniScroll", function() {
       expect(infini.options.untilAttr).toEqual("id");
       expect(infini.options.pageSize).toEqual(25);
       expect(infini.options.scrollOffset).toEqual(100);
-      expect(infini.options.update).toEqual(true);
       expect(infini.options.remove).toEqual(false);
       expect(infini.options.includePage).toEqual(false);
     });
@@ -146,11 +145,11 @@ describe("InfiniScroll", function() {
       });
 
       it("should call collection fetch with the query param, until offset, success, and error callbacks", function() {
-        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, update: true, remove: false, data: queryParams});
+        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, remove: false, data: queryParams});
       });
 
       it("should disable scroll watch until the fetch has returned", function() {
-        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, update: true, remove: false, data: queryParams});
+        expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, remove: false, data: queryParams});
 
         infini.watchScroll(event);
         expect(collection.fetch.callCount).toEqual(1);
@@ -172,7 +171,7 @@ describe("InfiniScroll", function() {
           queryParams[infini.options.pageSizeParam] = infini.options.pageSize;
 
           infini.watchScroll(event);
-          expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, update: true, remove: false, data: queryParams});
+          expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, remove: false, data: queryParams});
         });
       });
 
@@ -183,7 +182,7 @@ describe("InfiniScroll", function() {
           queryParams[infini.options.pageSizeParam] = infini.options.pageSize;
 
           infini.watchScroll(event);
-          expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, update: true, remove: false, data: queryParams});
+          expect(collection.fetch).toHaveBeenCalledWith({success: infini.fetchSuccess, error: infini.fetchError, remove: false, data: queryParams});
         });
       });
 
