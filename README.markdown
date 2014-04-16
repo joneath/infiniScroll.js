@@ -40,7 +40,8 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
       scrollOffset: 100,
       remove: false,
       strict: false,
-      includePage: false
+      includePage: false,
+      disableDefaultParams: false
     }
 
 * `success` - Success callback function called when `collection.fetch` is successful
@@ -55,3 +56,4 @@ Instantiate a new `InfiniScroll` object after your Backbone view has been render
 * `remove` - Passed to collection fetch to add new records to the collection without removing existing ones
 * `strict` - Used to determine when to stop fetching. Setting strict on will fetch until the response size is less than the page size (This can save one extra request being made to the server, but requires the response size to be consistent). Setting strict off will fetch until the response length is equal to 0 (better for varying page size responses).
 * `includePage` - Boolean to include the next page in the query params eg. "&page=2".
+* `disableDefaultParams` - Boolean to exclude default 'until' and 'page_size' params from the fetch.

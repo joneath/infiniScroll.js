@@ -50,6 +50,7 @@ describe("InfiniScroll", function() {
       expect(infini.options.scrollOffset).toEqual(100);
       expect(infini.options.remove).toEqual(false);
       expect(infini.options.includePage).toEqual(false);
+      expect(infini.options.disableDefaultParams).toEqual(false);
     });
   });
 
