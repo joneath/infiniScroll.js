@@ -121,7 +121,7 @@ describe("InfiniScroll", function() {
     var event;
 
     beforeEach(function() {
-      event = jQuery.Event("scroll");
+      event = $.Event("scroll");
       spyOn(collection, "fetch");
     });
 
